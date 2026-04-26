@@ -438,9 +438,18 @@ document.querySelectorAll(".page").forEach(p=>p.style.display="none");
 }
 
 function shareApp(){
-let url="https:https://kodular.app/WHG-SCI";
-navigator.share ? navigator.share({title:"UNILA",url}) :
-window.open("https://wa.me/?text="+url);
+let url="https://kodular.app/WHG-SCI";
+let texto="📱 App UNILA - Universidade Federal da Integração Latino-Americana\nBaixe agora:\n"+url;
+
+if(navigator.share){
+navigator.share({
+title:"App UNILA",
+text:texto,
+url:url
+});
+}else{
+window.open("https://wa.me/?text="+encodeURIComponent(texto));
+}
 }
 
 window.addEventListener("beforeinstallprompt",(e)=>{
@@ -463,4 +472,4 @@ navigator.serviceWorker.register('sw.js');
 </script>
 
 </body>
-</html>
+  </html>
