@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unila App</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#22c55e">
+
+<style>
+body{font-family:Arial;background:#0f172a;color:white;margin:0;}
+
+.menu{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:12px;
+padding:16px;
+}
+
+button{
+padding:16px;
+border:none;
+border-radius:12px;
+font-weight:bold;
+color:white;
+}
+
+.page{
+display:none;
+padding:20px;
+line-height:1.7;
+}
+
+/* BOTÃO HOME AJUSTADO */
+.home-btn{
+position:fixed;
+bottom:90px;
+right:15px;
+background:#22c55e;
+padding:14px;
+border-radius:50%;
+font-size:18px;
+z-index:999;
+}
+
+/* instalar */
+.install-btn{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#22c55e;
+padding:14px;
+border-radius:12px;
+display:none;
+}
+
+/* cores */
+.unila{background:#2563eb;}
+.sigaa{background:#9333ea;}
+.gmail{background:#ea4335;}
+.google{background:#fbbc05;color:black;}
+.instagram{background:#d62976;}
+.facebook{background:#1877f2;}
+.biblioteca{background:#8b5cf6;}
+.intercampi{background:#0ea5e9;}
+.smartec{background:#06b6d4;}
+.editais{background:#0d9488;}
+.emergencia{background:#dc2626;}
+.enderecos{background:#eab308;color:black;}
+.ru{background:#f97316;}
+.info{background:#1877f2;}
+.dev{background:#6366f1;}
+.notes{background:#14b8a6;}
+.share{background:#10b981;}
+.internet{background:#3b82f6;}
+.estude{background:#22c55e;}
+</style>
+</head>
+
+<body>
+
+<button class="home-btn" onclick="goHome()">🏠</button>
+<button id="installBtn" class="install-btn">📲 Instalar App</button>
+
+<div id="home" class="menu">
+
+<button class="unila" onclick="openLink('https://portal.unila.edu.br/')">🌐 Portal Oficial da UNILA</button>
+<button class="sigaa" onclick="openLink('https://sig.unila.edu.br/sigaa/verTelaLogin.do')">📚 Sistema Acadêmico SIGAA</button>
+<button class="gmail" onclick="openLink('https://mail.google.com/')">📧 E-mail Institucional</button>
+<button class="google" onclick="openLink('https://www.google.com/')">🔎 Pesquisa Google</button>
+<button class="instagram" onclick="openLink('https://www.instagram.com/instaunila/')">📸 Instagram UNILA</button>
+<button class="facebook" onclick="openLink('https://www.facebook.com/unila.oficial')">📘 Facebook UNILA</button>
+<button class="biblioteca" onclick="openLink('https://portal.unila.edu.br/biblioteca')">📖 Biblioteca UNILA</button>
+<button class="intercampi" onclick="openLink('https://portal.unila.edu.br/proagi/delog/arquivos/horario-intercampi/quadro-de-horario-intercampi.pdf')">🚌 Transporte Intercampi</button>
+<button class="smartec" onclick="openLink('https://www.facebook.com/profile.php?id=61562436416014')">💻 Smart Tech</button>
+<button class="editais" onclick="openLink('https://documentos.unila.edu.br/')">📄 Editais Oficiais</button>
+
+<button class="emergencia" onclick="openPage('emergenciaPage')">🚨 Telefones de Emergência</button>
+<button class="enderecos" onclick="openPage('enderecosPage')">🏫 Endereços dos Campus</button>
+<button class="ru" onclick="openPage('ruPage')">🍽️ Restaurantes Universitários</button>
+<button class="info" onclick="openLink('https://facebook.com/groups/1469303078173697/')">👥 Grupo de Estudantes</button>
+<button class="dev" onclick="openPage('devPage')">👨‍💻 Desenvolvedor</button>
+<button class="notes" onclick="openPage('notesPage')">📝 Anotações</button>
+<button class="share" onclick="shareApp()">📤 Compartilhar App</button>
+<button class="internet" onclick="openPage('internetPage')">🌐 Internet UNILA</button>
+<button class="estude" onclick="openPage('estudPage')">🎓 Estude na UNILA</button>
+
+</div>
+
+<!-- EMERGÊNCIA -->
+<div id="emergenciaPage" class="page">
+<h2>🚨 Telefones de Emergência</h2>
+
+<p>
+Polícia Militar: 190<br>
+SAMU (Ambulância): 192<br>
+Bombeiros: 193<br><br>
+
+Hospital Municipal: (45) 2105-4100<br>
+Guarda Municipal: (45) 2105-5100<br>
+Delegacia da Mulher: (45) 3521-9200<br>
+Defesa Civil: 199<br><br>
+
+Polícia Federal: (45) 3522-1174<br>
+Polícia Rodoviária Federal: (45) 3576-1400<br>
+Disque Denúncia: 181<br>
+Conselho Tutelar: (45) 3521-1112<br>
+Centro de Intoxicações: 0800 722 6001<br><br>
+
+⚠ Em situações graves, ligue imediatamente para os serviços de emergência.<br>
+</p>
+</div>
+
+<!-- ENDEREÇOS -->
+<div id="enderecosPage" class="page">
+<h2>🏫 Campus UNILA</h2>
+
+<p>
+<h3>📍 UNILA Jardim Universitário (JU)</h3>
+<p>
+Endereço: Avenida Tarquínio Joslin dos Santos, 1000 - Polo Universitário<br>
+CEP: 85.870-901
+</p>
+
+<h3>📍 UNILA PTI (Parque Tecnológico Itaipu)</h3>
+<p>
+Endereço: Avenida Tancredo Neves, 6731 - Jardim Itaipu<br>
+CEP: 85.867-970
+</p>
+
+<h3>📍 Edifício Rio Almada</h3>
+<p>
+Endereço: Avenida Tancredo Neves, 3838 - Porto Belo<br>
+CEP: 85.867-633
+</p>
+
+<h3>📍 Campus Integração</h3>
+<p>
+Endereço: Avenida Tancredo Neves, 3147 - Porto Belo
+</p>
+
+<h3>📍 Almoxarifado / Patrimônio (Portal da Foz)</h3>
+<p>
+Endereço: Rua Macucos, 131
+</p>
+
+📍 Campus Arandu<br>Itaipu Binacional,
+Projeto de Oscar Niemeyer em construção.
+</p>
+</div>
+
+<!-- RU -->
+<div id="ruPage" class="page">
+<h2>🍽️ Restaurante Universitário (RU)</h2>
+
+<p>
+<h2>🍽️ Restaurante Universitário (RU) da UNILA</h2>
+
+<p>
+O Restaurante Universitário (RU) da UNILA em Foz do Iguaçu opera em duas unidades, oferecendo café da manhã, almoço e jantar para estudantes e servidores.
+</p>
+
+<p>
+Os valores das refeições em restaurantes universitários federais variam, com média aproximada de R$ 3,75 a R$ 4,00 por refeição, podendo sofrer alterações conforme editais e políticas de auxílio estudantil.
+</p>
+
+<h3>📍 Unidade Jardim Universitário (JU)</h3>
+
+<p>
+<b>Endereço:</b> Av. Tarquínio Joslin dos Santos, 1000 – Polo Universitário
+</p>
+
+<p>
+<b>Horários (Segunda a Sexta):</b><br>
+• Café da manhã: 06h45 – 08h00<br>
+• Almoço: 11h00 – 14h00<br>
+• Jantar: 17h30 – 19h30
+</p>
+
+<h3>📍 Unidade Itaipu Parquetec (PTI)</h3>
+
+<p>
+<b>Endereço:</b> Bloco 3, Itaipu Parquetec
+</p>
+
+<p>
+<b>Horários (Segunda a Sexta):</b><br>
+• Almoço: 11h30 – 14h30<br>
+• Jantar: 17h30 – 19h15
+</p>
+
+<h3>💰 Informações Gerais</h3>
+
+<p>
+Os preços são subsidiados para estudantes de graduação e pós-graduação, geralmente na faixa de R$ 4,00 por refeição.
+</p>
+
+<p>
+O acesso ao RU tem como objetivo principal a permanência estudantil, podendo haver tarifas reduzidas ou gratuidade para alunos bolsistas.
+</p>
+
+<h3>⚠️ Nota</h3>
+
+<p>
+Os horários e valores podem sofrer alterações conforme novas licitações, contratos ou reajustes institucionais da UNILA.
+</p>
+</p>
+</div>
+
+<!-- INTERNET -->
+<div id="internetPage" class="page">
+<h2>🌐 Internet UNILA</h2
+<h2>🌐 Configuração de Internet na UNILA</h2>
+
+<p>
+Para configurar a internet na UNILA, utilize a rede <b>eduroam</b> (preferencial) ou <b>UNILA</b> com segurança WPA2-Enterprise.
+</p>
+
+<p>
+O login é o mesmo do e-mail institucional (sem <b>@unila.edu.br</b> ou <b>@aluno.unila.edu.br</b>).
+</p>
+
+<p>
+Em Android, selecione <b>PEAP</b> e insira suas credenciais; em Windows, utilize o manual de configuração manual.
+</p>
+
+<h3>📶 Passo a passo para configuração (Wi-Fi UNILA / eduroam)</h3>
+
+<p>
+<b>Rede:</b> Selecione a rede <b>eduroam</b> ou <b>UNILA</b> nas configurações de Wi-Fi.
+</p>
+
+<p>
+<b>Segurança:</b> Selecione o tipo <b>WPA2-Enterprise</b>.
+</p>
+
+<p>
+<b>Tipo PEAP:</b> Selecione <b>PEAP</b> (Android) ou autenticação de usuário (Windows/iOS).
+</p>
+
+<p>
+<b>Autenticação CA:</b> Geralmente configurado como <b>"Não validado"</b>, <b>"Não especificado"</b> ou <b>"Certificado do sistema"</b>.
+</p>
+
+<h3>🔐 Credenciais</h3>
+
+<p>
+<b>Usuário / Identidade:</b> Seu e-mail institucional completo<br>
+(ex: aluno@aluno.unila.edu.br ou servidor@unila.edu.br)
+</p>
+
+<p>
+<b>Senha:</b> A mesma senha do e-mail/serviços institucionais
+</p>
+
+<p>
+<b>Domínio:</b> Caso solicitado, digite <b>unila.edu.br</b>
+</p>
+
+<h3>⚠️ Informações importantes</h3>
+
+<p>
+A rede <b>eduroam</b> permite acesso em diversas instituições de ensino ao redor do mundo.
+</p>
+
+<p>
+Se for visitante, o cadastro deve ser solicitado via Central de Serviços da UNILA.
+</p>
+
+<p>
+Para acessar serviços restritos fora do campus, é necessário configurar a VPN:<br>
+<b>vpn.unila.edu.br</b>
+</p>
+
+<p>
+Dispositivos Motorola podem exigir configurações adicionais. Procure a secretaria ou equipe de T.I.
+</p>
+
+<p>
+Em caso de problemas, consulte o FAQ da CTIC.
+</p>
+
+<h3>📌 Nota</h3>
+
+<p>
+As orientações acima baseiam-se nos protocolos de segurança padrão da instituição.
+</p>
+</p>
+</div>
+
+<!-- ESTUDE -->
+<div id="estudPage" class="page">
+<h2>🎓 Estude na UNILA</h2>
+
+
+<p>
+A Universidade Federal da Integração Latino-Americana (UNILA) é uma instituição pública, gratuita e voltada à integração entre os países da América Latina, oferecendo ensino superior de qualidade em diversas áreas do conhecimento.
+</p>
+
+<h3>📌 Principais formas de ingresso</h3>
+
+<p>
+<b>1. SiSU (Sistema de Seleção Unificada)</b><br>
+• Destinado a estudantes brasileiros<br>
+• Utiliza a nota do ENEM<br>
+• Geralmente considera as últimas edições do exame (até 3 anos)<br>
+• Processo nacional e altamente concorrido
+</p>
+
+<p>
+<b>2. Processo Seletivo Internacional (PSI)</b><br>
+• Voltado para estudantes estrangeiros da América Latina e Caribe<br>
+• Não possui prova<br>
+• Seleção baseada no histórico escolar<br>
+• Um dos principais diferenciais da UNILA
+</p>
+
+<p>
+<b>3. Processo Seletivo Indígena (PSIN)</b><br>
+• Destinado a povos indígenas da América Latina e Caribe<br>
+• Avaliação baseada em histórico escolar e critérios específicos<br>
+• Política de inclusão e diversidade cultural
+</p>
+
+<p>
+<b>4. Curso de Música</b><br>
+• Processo seletivo próprio<br>
+• Pode utilizar nota do ENEM<br>
+• Pode incluir avaliação artística específica
+</p>
+
+<p>
+<b>5. Vagas Remanescentes / Ociosas</b><br>
+• Para vagas não preenchidas após SiSU ou PSI<br>
+• Processo mais acessível<br>
+• Menor concorrência
+</p>
+
+<h3>🔄 Outras formas de ingresso</h3>
+
+<p>
+• Transferência interna e externa<br>
+• Reingresso (para quem já estudou na UNILA)<br>
+• Portador de diploma (para quem já possui graduação)
+</p>
+
+<h3>⚠️ Informações importantes</h3>
+
+<p>
+❌ A UNILA não possui vestibular tradicional<br>
+📅 O ingresso ocorre geralmente uma vez por ano<br>
+🆓 Todos os processos seletivos são gratuitos<br>
+🌎 Forte foco na integração latino-americana<br>
+🎓 Universidade pública e de alta qualidade
+</p>
+
+<h3>🏛 Benefícios para estudantes</h3>
+
+<p>
+• Educação 100% gratuita<br>
+• Restaurante universitário com baixo custo<br>
+• Bolsas de permanência estudantil<br>
+• Biblioteca moderna<br>
+• Laboratórios equipados<br>
+• Apoio acadêmico e pedagógico<br>
+• Ambiente multicultural
+</p>
+
+<h3>💡 Dicas para novos alunos</h3>
+
+<p>
+• Aprenda a usar o SIGAA desde o início<br>
+• Participe de projetos e atividades acadêmicas<br>
+• Acompanhe editais frequentemente<br>
+• Utilize o transporte intercampi<br>
+• Aproveite eventos, oficinas e oportunidades<br>
+</p>
+</p>
+</div>
+
+<!-- DEV -->
+<div id="devPage" class="page">
+<h2>👨‍💻 Desenvolvedor</h2>
+
+<p>
+Contato direto:<br>
+📞 (45) 99949-9759
+</p>
+
+<p>
+Aplicativo desenvolvido para facilitar acesso rápido às informações da UNILA.
+</p>
+</div>
+
+<!-- NOTES -->
+<div id="notesPage" class="page">
+<h2>📝 Anotações</h2>
+<textarea id="note"></textarea>
+<button onclick="saveNote()">Salvar</button>
+<div id="list"></div>
+</div>
+
+<script>
+let deferredPrompt;
+
+function openLink(u){window.open(u);}
+function openPage(id){
+document.getElementById("home").style.display="none";
+document.querySelectorAll(".page").forEach(p=>p.style.display="none");
+document.getElementById(id).style.display="block";
+}
+
+function goHome(){
+document.getElementById("home").style.display="grid";
+document.querySelectorAll(".page").forEach(p=>p.style.display="none");
+}
+
+function shareApp(){
+let url="https://fernando2018a1986-afk.github.io/Unila.app/";
+navigator.share ? navigator.share({title:"UNILA",url}) :
+window.open("https://wa.me/?text="+url);
+}
+
+window.addEventListener("beforeinstallprompt",(e)=>{
+e.preventDefault();
+deferredPrompt=e;
+document.getElementById("installBtn").style.display="block";
+});
+
+function saveNote(){
+let t=document.getElementById("note").value;
+let n=JSON.parse(localStorage.getItem("notes")||"[]");
+n.push(t);
+localStorage.setItem("notes",JSON.stringify(n));
+location.reload();
+}
+
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('sw.js');
+}
+</script>
+
+</body>
+</html>
