@@ -147,6 +147,18 @@ border:none;
 <button class="internet" onclick="openPage('internetPage')">🌐 Internet UNILA</button>
 <button class="estude" onclick="openPage('estudPage')">🎓 Estude na UNILA</button>
 <button class="noticias" onclick="openPage('noticiasPage')">📰 Notícias</button>
+<button onclick="atualizarApp()" style="
+  background:#000;
+  color:white;
+  padding:10px 18px;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  width:100%;
+  margin-top:10px;
+">
+  🔄 Atualizar App
+</button>
 
 </div>
 
@@ -455,6 +467,25 @@ loadNotes();
 
 window.onload=loadNotes;
 </script>
+<script>
+async function atualizarApp() {
+
+  // 1️⃣ Apaga todos caches
+  const nomesCaches = await caches.keys();
+  await Promise.all(nomesCaches.map(nome => caches.delete(nome)));
+
+  // 2️⃣ Força o service worker a atualizar (se houver um novo)
+  if (navigator.serviceWorker && navigator.serviceWorker.getRegistration) {
+    const registro = await navigator.serviceWorker.getRegistration();
+    if (registro) {
+      await registro.update();
+    }
+  }
+
+  // 3️⃣ Recarrega o app
+  location.reload(true);
+}
+</script>
 
 </body>
-  </html>
+                                                                                                                  </html>
