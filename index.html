@@ -64,6 +64,7 @@ border-radius:8px;
 font-size:12px;
 }
 
+/* CORES */
 .unila{background:#2563eb;}
 .sigaa{background:#9333ea;}
 .gmail{background:#ea4335;}
@@ -77,7 +78,6 @@ font-size:12px;
 .emergencia{background:#dc2626;}
 .enderecos{background:#eab308;color:black;}
 .ru{background:#f97316;}
-.info{background:#1877f2;}
 .dev{background:#6366f1;}
 .notes{background:#14b8a6;}
 .share{background:#10b981;}
@@ -92,6 +92,7 @@ border-radius:10px;
 border:none;
 padding:10px;
 font-size:16px;
+margin-bottom:10px;
 }
 
 .note-item{
@@ -108,6 +109,8 @@ align-items:center;
 background:#dc2626;
 padding:8px;
 border-radius:8px;
+color:white;
+border:none;
 }
 </style>
 </head>
@@ -134,7 +137,7 @@ border-radius:8px;
 <button class="emergencia" onclick="openPage('emergenciaPage')">🚨 Telefones de Emergência</button>
 <button class="enderecos" onclick="openPage('enderecosPage')">🏫 Endereços dos Campus</button>
 <button class="ru" onclick="openPage('ruPage')">🍽️ Restaurantes Universitários</button>
-<button class="info" onclick="openLink('https://facebook.com/groups/1469303078173697/')">👥 Grupo no Facebook</button>
+<button class="facebook" onclick="openLink('https://facebook.com/groups/1469303078173697/')">👥 Grupo no Facebook</button>
 <button class="dev" onclick="openPage('devPage')">👨‍💻 Desenvolvedor</button>
 <button class="notes" onclick="openPage('notesPage')">📝 Anotações</button>
 <button class="share" onclick="shareApp()">📤 Compartilhar App</button>
@@ -145,8 +148,7 @@ border-radius:8px;
 
 <!-- EMERGÊNCIA -->
 <div id="emergenciaPage" class="page">
-<h2>�🚨 Telefones de Emergência</h2>
-
+<h2>🚨 Telefones de Emergência</h2>
 <p>
 Polícia Militar: 190<br>
 SAMU (Ambulância): 192<br>
@@ -158,219 +160,223 @@ Delegacia da Mulher: (45) 3521-9200<br>
 Defesa Civil: 199<br><br>
 
 Polícia Federal: (45) 3522-1174<br>
-Polícia Rodoviária Federal: (45) 3576-1400<br>
+Polícia Rodoviária Federal: (45) 3576-1400<br><br>
 
 Prae-Unila: +55 45 3522-9983<br>
-Prograd-Unila: +55 (45) 3522-9766<br>
-
+Prograd-Unila: +55 (45) 3522-9766<br><br>
 
 Disque Denúncia: 181<br>
 Conselho Tutelar: (45) 3521-1112<br>
 Centro de Intoxicações: 0800 722 6001<br><br>
 
-⚠ Em situações graves, ligue imediatamente para os serviços de emergência.<br>
+⚠ Em situações graves, ligue imediatamente.
 </p>
-</div><div id="enderecosPage" class="page">
-<h2>🏫 Campus UNILA</h2>
-
-<h3>📍 UNILA Jardim Universitário (JU)</h3>
-<p>
-Endereço: Avenida Tarquínio Joslin dos Santos, 1000 - Polo Universitário<br>
-CEP: 85.870-901
-</p>
-
-<h3>Unila Parque Tec (Parque Tecnológico Itaipu)</h3>
-<p>
-Endereço: Avenida Tancredo Neves, 6731 - Jardim Itaipu<br>
-CEP: 85.867-970
-</p>
-
-<h3>📍 Edifício Rio Almada</h3>
-<p>
-Endereço: Avenida Tancredo Neves, 3838 - Porto Belo<br>
-CEP: 85.867-633
-</p>
-
-<h3>📍 Campus Integração</h3>
-<p>
-Endereço: Avenida Tancredo Neves, 3147 - Porto Belo
-</p>
-
-<h3>📍 Almoxarifado / Patrimônio (Portal da Foz)</h3>
-<p>
-Endereço: Rua Macucos, 131
-</p>
-
-<p>
-📍 Campus Arandu<br>
-Itaipu Binacional, Projeto de Oscar Niemeyer em construção.
 </p>
 </div>
 
-<!-- RU -->
+<!-- ENDEREÇOS -->
+<div id="enderecosPage" class="page">
+<h2>🏫 Campus UNILA</h2>
+<p>
+📍 UNILA Jardim Universitário (JU)<br>
+Av. Tarquínio Joslin dos Santos, 1000 – Polo Universitário<br>
+CEP: 85870-901<br><br>
+
+📍 UNILA Parque Tecnológico Itaipu (Parque Tec)<br>
+Av. Tancredo Neves, 6731 – Jardim Itaipu<br>
+CEP: 85867-970<br><br>
+
+📍 Edifício Rio Almada<br>
+Av. Tancredo Neves, 3838 – Porto Belo<br>
+CEP: 85867-633<br><br>
+
+📍 Campus Integração<br>
+Av. Tancredo Neves, 3147 – Porto Belo<br><br>
+
+📍 Almoxarifado / Patrimônio<br>
+Rua Macucos, 131 – Portal da Foz<br><br>
+
+📍 Campus Arandu<br>
+Projeto em construção na Itaipu Binacional
+</p>
+</div>
 <div id="ruPage" class="page">
+
 <h2>🍽️ Restaurante Universitário (RU)</h2>
 
+<!-- COLE AQUI O TEXTO QUE TE ENVIEI -->
 <p>
-O Restaurante Universitário (RU) da UNILA em Foz do Iguaçu opera em duas unidades, oferecendo café da manhã, almoço e jantar para estudantes e servidores.
+O Restaurante Universitário (RU) da UNILA oferece alimentação acessível para estudantes e servidores.
 </p>
 
 <p>
-Os valores das refeições em restaurantes universitários federais variam, com média aproximada de R$ 3,75 a R$ 4,00 por refeição, podendo sofrer alterações conforme editais e políticas de auxílio estudantil.
-</p>
+📍 Unidade Jardim Universitário (JU)<br>
+Av. Tarquínio Joslin dos Santos, 1000<br><br>
 
-<h3>📍 Unidade Jardim Universitário (JU)</h3>
-
-<p>
-<b>Endereço:</b> Av. Tarquínio Joslin dos Santos, 1000 – Polo Universitário
-</p>
-
-<p>
-<b>Horários (Segunda a Sexta):</b><br>
-• Café da manhã: 06h45 – 08h00<br>
-• Almoço: 11h00 – 14h00<br>
-• Jantar: 17h30 – 19h30
-</p>
-
-<h3>📍 Unidade Itaipu Parquetec (PTI)</h3>
-
-<p>
-<b>Endereço:</b> Bloco 3, Itaipu Parquetec
+🕒 Horários:<br>
+Café: 06h45 – 08h00<br>
+Almoço: 11h00 – 14h00<br>
+Jantar: 17h30 – 19h30<br>
 </p>
 
 <p>
-<b>Horários (Segunda a Sexta):</b><br>
-• Almoço: 11h30 – 14h30<br>
-• Jantar: 17h30 – 19h15
-</p>
+📍 Unidade Itaipu Parquetec (PTI)<br>
+Bloco 3<br><br>
 
-<h3>💰 Informações Gerais</h3>
-
-<p>
-Os preços são subsidiados para estudantes de graduação e pós-graduação, geralmente na faixa de R$ 4,00 por refeição.
+🕒 Horários:<br>
+Almoço: 11h30 – 14h30<br>
+Jantar: 17h30 – 19h15<br>
 </p>
 
 <p>
-O acesso ao RU tem como objetivo principal a permanência estudantil, podendo haver tarifas reduzidas ou gratuidade para alunos bolsistas.
+💰 Valor médio: R$ 4,00<br>
+Pode ser gratuito para bolsistas.
 </p>
 
-<h3>⚠️ Nota</h3>
-
 <p>
-Os horários e valores podem sofrer alterações conforme novas licitações, contratos ou reajustes institucionais da UNILA.
+⚠ Horários e valores podem sofrer alterações.
 </p>
 
 </div>
-
-
+</p>
 
 <!-- INTERNET -->
 <div id="internetPage" class="page">
-<h2>🌐 Internet UNILA</h2>
-<h2>🌐 Configuração de Internet na UNILA</h2>
-
-<p>
-Utilize a rede <b>eduroam</b> ou <b>UNILA</b> com segurança WPA2-Enterprise.
+<h2><p>
+Para configurar a internet da UNILA (redes <b>UNILA</b> ou <b>eduroam</b>), conecte-se à rede e utilize as configurações abaixo:
 </p>
 
 <p>
-Login: seu e-mail institucional completo
-</p>
-
-<h3>📶 Passo a passo</h3>
-
-<p>
-Rede: eduroam ou UNILA<br>
-Segurança: WPA2-Enterprise<br>
-Tipo: PEAP<br>
-Autenticação: Não validado ou certificado do sistema
-</p>
-
-<h3>🔐 Credenciais</h3>
-
-<p>
-Usuário: e-mail institucional<br>
-Senha: mesma do e-mail<br>
-Domínio: unila.edu.br
-</p>
-
-<h3>⚠️ Informações</h3>
-
-<p>
-• eduroam funciona em várias universidades<br>
-• Visitantes devem solicitar acesso<br>
-• VPN: vpn.unila.edu.br<br>
-Dispositivos Motorola pode precisar outras configurações, consultar sua secretária ou T.i<br>
+📶 Configuração geral:<br>
+• Método EAP: PEAP<br>
+• Autenticação Fase 2: MSCHAPV2<br>
+• Certificado CA: Não validar ou não especificado<br>
+• Identidade/Usuário: seu e-mail institucional (sem @unila.edu.br)<br>
+• Senha: senha do e-mail institucional
 </p>
 
 <p>
-📌 Configuração baseada nos padrões da UNILA.
+📱 Dispositivos Android:<br>
+• Selecione a rede UNILA ou eduroam<br>
+• Configure conforme os dados acima<br>
+</p>
+
+<p>
+🍎 Dispositivos iOS (iPhone/iPad):<br>
+• Selecione a rede UNILA ou eduroam<br>
+• Insira usuário e senha institucional<br>
+• Aceite o certificado quando solicitado
+</p>
+
+<p>
+💡 Dicas importantes:<br>
+• Identidade anônima: deixar em branco<br>
+• A rede eduroam funciona em várias universidades<br>
+• Visitantes podem usar credenciais da instituição de origem<br>
+• Alguns dispositivos Motorola podem exigir configurações adicionais (consulte o suporte)
+</p>
+
+<p>
+⚠ Problemas de acesso:<br>
+Acesse o Portal de Serviços da UNILA para suporte técnico.
+</p>
 </p>
 </div>
 
 <!-- ESTUDE -->
 <div id="estudPage" class="page">
 <h2>🎓 Estude na UNILA</h2>
-
 <p>
-Universidade pública, gratuita e voltada à integração latino-americana.
+A Universidade Federal da Integração Latino-Americana (UNILA), localizada em Foz do Iguaçu-PR, é uma instituição pública, gratuita e voltada à integração entre os países da América Latina.
 </p>
 
-<h3>📌 Formas de ingresso</h3>
-
 <p>
-1. SiSU (ENEM)<br>
-2. Processo Internacional (PSI)<br>
-3. Processo Indígena (PSIN)<br>
-4. Curso de Música<br>
-5. Vagas remanescentes
+A universidade oferece cerca de 29 cursos de graduação presenciais em diversas áreas do conhecimento, com foco acadêmico e social voltado à realidade latino-americana.
 </p>
 
-<h3>🔄 Outras formas</h3>
-
 <p>
-Transferência, reingresso e portador de diploma
+🏛 Estrutura acadêmica:<br>
+A UNILA é organizada em quatro institutos:<br>
+• ILAACH – Artes, Cultura e História<br>
+• ILACVN – Ciências da Vida e da Natureza<br>
+• ILAESP – Economia, Sociedade e Política<br>
+• ILATIT – Tecnologia, Infraestrutura e Território
 </p>
 
-<h3>⚠️ Informações</h3>
-
 <p>
-• Não tem vestibular<br>
-• Ingresso anual<br>
-• Gratuito
+📚 Cursos de graduação por instituto:<br><br>
+
+<b>ILAACH:</b><br>
+Antropologia, Cinema e Audiovisual, História, Letras (Artes e Mediação Cultural), Música<br><br>
+
+<b>ILACVN:</b><br>
+Biotecnologia, Ciências Biológicas, Ciências da Natureza, Engenharia Física, Medicina, Química, Saúde Coletiva<br><br>
+
+<b>ILAESP:</b><br>
+Administração Pública, Ciência Política e Sociologia, Ciências Econômicas, Desenvolvimento Rural, Filosofia, Relações Internacionais, Serviço Social<br><br>
+
+<b>ILATIT:</b><br>
+Arquitetura e Urbanismo, Engenharia Civil de Infraestrutura, Engenharia de Energia, Engenharia de Materiais, Engenharia Química, Geografia
 </p>
 
-<h3>🏛 Benefícios</h3>
-
 <p>
-• Ensino gratuito<br>
-• RU barato<br>
-• Bolsas<br>
-• Biblioteca<br>
-• Laboratórios
+📌 Formas de ingresso:<br>
+• SiSU (nota do ENEM)<br>
+• Processo Seletivo Internacional (PSI)<br>
+• Processo Seletivo para Indígenas (PSIN)<br>
+• Curso de Música com seleção própria<br>
+• Vagas remanescentes
 </p>
 
-<h3>💡 Dicas</h3>
+<p>
+🔄 Outras formas de entrada:<br>
+• Transferência externa<br>
+• Reingresso<br>
+• Portador de diploma
+</p>
 
 <p>
-• Use o SIGAA<br>
-• Participe de projetos<br>
-• Acompanhe editais
+⚠ Informações importantes:<br>
+• Não possui vestibular próprio<br>
+• Ingresso geralmente anual<br>
+• Ensino totalmente gratuito<br>
+• Cursos presenciais
+</p>
+
+<p>
+🌎 Diferenciais da UNILA:<br>
+• Ambiente internacional com estudantes de vários países<br>
+• Integração cultural latino-americana<br>
+• Ensino público de qualidade
+</p>
+
+<p>
+📊 Qualidade acadêmica:<br>
+A UNILA possui nota 4 (de 5) no Índice Geral de Cursos (IGC) do MEC.
+</p>
+
+<p>
+🏛 Benefícios oferecidos:<br>
+• Restaurante Universitário (baixo custo)<br>
+• Bolsas de auxílio estudantil<br>
+• Biblioteca completa<br>
+• Laboratórios modernos<br>
+• Projetos de pesquisa e extensão
+</p>
+
+<p>
+💡 Dicas para novos estudantes:<br>
+• Utilize o SIGAA para sua vida acadêmica<br>
+• Acompanhe os editais regularmente<br>
+• Participe de projetos e atividades da universidade
+</p>
 </p>
 </div>
 
 <!-- DEV -->
 <div id="devPage" class="page">
 <h2>👨‍💻 Desenvolvedor</h2>
-
-<p>
-Contato direto:<br>
-+55 45 99949-9759
-</p>
-
-<p>
-Aplicativo desenvolvido para facilitar acesso rápido às informações da UNILA.
-</p>
+<p>Fernando - Serviço Social<br>Contato: +55 45 99949-9759</p>
 </div>
 
 <!-- NOTES -->
@@ -396,21 +402,45 @@ document.querySelectorAll(".page").forEach(p=>p.style.display="none");
 }
 
 function updateApp(){
-window.open("https://drive.google.com/file/d/1XgYsFJlnd8VuQGAyYopxNI2Huuknsugo/view?usp=drivesdk");
+window.open("https://drive.google.com/file/d/1XgYsFJlnd8VuQGAyYopxNI2Huuknsugo/view");
+}
+
+function loadNotes(){
+let list=document.getElementById("list");
+list.innerHTML="";
+let notes=JSON.parse(localStorage.getItem("notes")||"[]");
+
+notes.forEach((n,i)=>{
+let div=document.createElement("div");
+div.className="note-item";
+div.innerHTML=`${n} <button class="delete-btn" onclick="deleteNote(${i})">🗑</button>`;
+list.appendChild(div);
+});
 }
 
 function saveNote(){
 let t=document.getElementById("note").value;
-let n=JSON.parse(localStorage.getItem("notes")||"[]");
-n.push(t);
-localStorage.setItem("notes",JSON.stringify(n));
-location.reload();
+if(!t) return;
+let notes=JSON.parse(localStorage.getItem("notes")||"[]");
+notes.push(t);
+localStorage.setItem("notes",JSON.stringify(notes));
+document.getElementById("note").value="";
+loadNotes();
 }
+
+function deleteNote(i){
+let notes=JSON.parse(localStorage.getItem("notes")||"[]");
+notes.splice(i,1);
+localStorage.setItem("notes",JSON.stringify(notes));
+loadNotes();
+}
+
+function shareApp(){
+navigator.share ? navigator.share({title:"Unila App",text:"Acesse o app UNILA"}) : alert("Compartilhamento não suportado");
+}
+
+window.onload=loadNotes;
 </script>
 
 </body>
-</html>⚠️ Aviso Importante
-Atualmente, servidores das universidades federais estão em greve em várias partes do Brasil.
-Isso pode afetar o funcionamento da universidade, como aulas, atendimento, biblioteca, restaurante universitário e outros serviços.
-Algumas atividades podem estar funcionando normalmente, outras parcialmente ou até paradas.
-Essa greve acontece por causa de pedidos de melhorias salariais.
+  </html>
