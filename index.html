@@ -119,7 +119,6 @@ border:none;
 
 <button class="home-btn" onclick="goHome()">🏠</button>
 <button id="installBtn" class="install-btn">📲 Instalar App</button>
-<button class="update-btn" onclick="updateApp()">🔄 Atualizar Versão</button>
 
 <div id="home" class="menu">
 
@@ -401,9 +400,15 @@ document.getElementById("home").style.display="grid";
 document.querySelectorAll(".page").forEach(p=>p.style.display="none");
 }
 
-function updateApp(){
-window.open("https://drive.google.com/file/d/1XgYsFJlnd8VuQGAyYopxNI2Huuknsugo/view?usp=drivesdk");
-}
+function shareApp(){
+  const texto = "📲 Baixe o App da UNILA:";
+  const url = "https://drive.google.com/file/d/1XgYsFJlnd8VuQGAyYopxNI2Huuknsugo/view?usp=drivesdk";
+
+  const mensagem = encodeURIComponent(texto + " " + url);
+
+  // Tenta abrir fora do WebView (Chrome/WhatsApp)
+  window.open("https://api.whatsapp.com/send?text=" + mensagem, "_system");
+}""
 
 function loadNotes(){
 let list=document.getElementById("list");
@@ -435,12 +440,9 @@ localStorage.setItem("notes",JSON.stringify(notes));
 loadNotes();
 }
 
-function shareApp(){
-navigator.share ? navigator.share({title:"Unila App",text:"Acesse o app UNILA"}) : alert("Compartilhamento não suportado");
-}
 
 window.onload=loadNotes;
 </script>
 
 </body>
-  </html>
+</html>
