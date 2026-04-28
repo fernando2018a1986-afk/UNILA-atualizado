@@ -1,28 +1,30 @@
-const CACHE_NAME = "unila-cache-v3";
+const CACHE_NAME = "unila-v1";
 
-const ASSETS = [
+const urlsToCache = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./icone-192.png",
-  "./icone-512.png"
+  "./icon-192.png",
+  "./icon-512.png"
 ];
 
-// INSTALAR
-self.addEventListener("install", (event) => {
+// instala
+self.addEventListener("install", event => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
 });
 
-// ATIVAR
-self.addEventListener("activate", (event) => {
+// ativa
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then((keys) =>
+    caches.keys().then(keys =>
       Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key);
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
         })
       )
     )
@@ -30,17 +32,16 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// FETCH (ESTRATÉGIA CORRETA)
-self.addEventListener("fetch", (event) => {
-  if (event.request.mode === "navigate") {
-    // SEMPRE pega a versão nova do index.html
-    event.respondWith(fetch(event.request).catch(() => caches.match("./index.html")));
-    return;
-  }
-
+// fetch (offline)
+self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request).then(res => res || fetch(event.request))
   );
+});
+
+// atualizar na hora
+self.addEventListener("message", event => {
+  if (event.data === "update") {
+    self.skipWaiting();
+  }
 });
