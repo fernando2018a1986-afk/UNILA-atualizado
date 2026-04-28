@@ -387,7 +387,7 @@ Polo de Inovação: Pela proximidade com a Itaipu e o Parque Tecnológico (Parqu
 O significado do nome:
 "Arandu", em guarani, significa sabedoria ou ouvir o tempo. O nome reflete a missão da universidade de valorizar os saberes ancestrais e promover o diálogo entre as diferentes culturas do continente.<br><br>
 
-Servidores das Universidades Federais em greve por tempo indeterminado, afetando bibliotecas, T.i. e outros setores, no entanto as aulas seguem normalmente🌼.</p>
+Servidores das Universidades Federais em greve por tempo indeterminado, afetando bibliotecas, T.i. e outros setores, no entanto as aulas seguem normalmente.🥲😭</p>
 </div>
 
 <!-- DEV -->
@@ -483,28 +483,19 @@ loadNotes();
 function atualizarApp(){
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.getRegistration().then(reg => {
-      if (!reg) {
-        alert("⚠ App não instalado.");
-        return;
-      }
+      if (reg) {
+        reg.update();
 
-      // força buscar nova versão do service worker
-      reg.update();
+        if (reg.waiting) {
+          reg.waiting.postMessage("FORCE_UPDATE");
+        }
 
-      // pega novo service worker (esperando ou instalando)
-      const newWorker = reg.waiting || reg.installing;
-
-      if (newWorker) {
-        newWorker.postMessage("FORCE_UPDATE");
-
-        alert("🚀 Atualizando agora...");
-
+        alert("🔄 Atualizando app...");
         setTimeout(() => {
-          window.location.reload();
-        }, 1500);
-
+          window.location.reload(true);
+        }, 1000);
       } else {
-        alert("✅ App já está atualizado!");
+        alert("App não instalado ainda.");
       }
     });
   }
@@ -518,4 +509,4 @@ if ("serviceWorker" in navigator) {
 }</script>
 
 </body>
-</html> Terça feira 28-04-2025
+                                                                                   </html>Bom Dia!
