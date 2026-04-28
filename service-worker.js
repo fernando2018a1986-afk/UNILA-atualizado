@@ -1,39 +1,42 @@
-const CACHE_NAME = 'unila-v24'; // depois vamos mudar versão
+const CACHE_NAME = "unila-app-v3"; // MUDE ISSO A CADA UPDATE
 
-self.addEventListener('install', event => {
-  self.skipWaiting(); // instala e já prepara pra ativar
+const FILES = [
+  "./",
+  "./index.html",
+  "./manifest.json"
+];
+
+// INSTALAÇÃO
+self.addEventListener("install", event => {
+  self.skipWaiting(); // força instalar imediatamente
+
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(FILES);
+    })
+  );
 });
 
-self.addEventListener('activate', event => {
+// ATIVAÇÃO
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
+    caches.keys().then(keys => {
+      return Promise.all(
         keys.map(key => {
           if (key !== CACHE_NAME) {
-            return caches.delete(key);
+            return caches.delete(key); // remove cache antigo
           }
         })
-      )
-    )
+      );
+    })
   );
 
   self.clients.claim(); // assume controle imediato
 });
 
-// permite ativação manual (botão atualizar)
-self.addEventListener('message', event => {
-  if (event.data === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
+// FETCH (offline)
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
+  );
 });
-
-// controle de cache
-self.addEventListener('fetch', event => {
-
-  // HTML sempre atualizado
-  if (event.request.mode === 'navigate') {
-    event.respondWith(fetch(event.request));
-    return;
-  }
-
-  // outros
