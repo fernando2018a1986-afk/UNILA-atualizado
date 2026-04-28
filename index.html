@@ -558,6 +558,11 @@ if ('serviceWorker' in navigator) {
     };
 
   }).catch(err => console.log("Erro SW:", err));
+  if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    window.location.reload();
+  });
+  }
 
 }</script>
 
