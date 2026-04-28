@@ -8,7 +8,7 @@ const FILES = [
 
 // INSTALAÇÃO
 self.addEventListener("install", event => {
-  self.skipWaiting(); // força instalar imediatamente
+  self.skipWaiting();
 
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -24,14 +24,14 @@ self.addEventListener("activate", event => {
       return Promise.all(
         keys.map(key => {
           if (key !== CACHE_NAME) {
-            return caches.delete(key); // remove cache antigo
+            return caches.delete(key);
           }
         })
       );
     })
   );
 
-  self.clients.claim(); // assume controle imediato
+  self.clients.claim();
 });
 
 // FETCH (offline)
@@ -39,4 +39,11 @@ self.addEventListener("fetch", event => {
   event.respondWith(
     fetch(event.request).catch(() => caches.match(event.request))
   );
+});
+
+// 🔥 ESSENCIAL PARA O BOTÃO FUNCIONAR
+self.addEventListener("message", event => {
+  if (event.data === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
