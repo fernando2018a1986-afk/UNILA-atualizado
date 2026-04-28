@@ -516,7 +516,7 @@ function atualizarApp(){
 
       // se já tiver nova versão esperando
       if (reg.waiting) {
-        reg.waiting.postMessage("FORCE_UPDATE");
+        reg.waiting.postMessage("SKIP_WAITING");
       }
 
       // escuta quando o novo SW assume
@@ -531,10 +531,34 @@ function atualizarApp(){
 }
 
 window.onload = loadNotes;
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./service-worker.js")
-    .then(() => console.log("Service Worker registrado"))
-    .catch(err => console.log("Erro SW:", err));
+let newWorker;
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js').then(reg => {
+
+    console.log("Service Worker registrado");
+
+    // força verificar atualização
+    reg.update();
+
+    reg.onupdatefound = () => {
+      newWorker = reg.installing;
+
+      newWorker.onstatechange = () => {
+        if (newWorker.state === 'installed') {
+
+          if (navigator.serviceWorker.controller) {
+            console.log("Nova versão disponível!");
+
+            // opcional: mostrar botão na tela
+            alert("Nova versão disponível! Clique em ATUALIZAR APP.");
+          }
+        }
+      };
+    };
+
+  }).catch(err => console.log("Erro SW:", err));
+}
 }</script>
 
 </body>
@@ -544,5 +568,4 @@ if ("serviceWorker" in navigator) {
 
 
 
-Para Usar o E-mail institucional aqui no App adicione sua conta aqui e salve a senha no atalho.
-20
+Para Usar o E-mail institucional aqui no App adicione sua conta aqui e salve a senha no atalho.22
