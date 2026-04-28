@@ -1,59 +1,39 @@
-const CACHE_NAME = "unila-app-v20"; // 🔥 troque versão sempre que atualizar
+const CACHE_NAME = 'unila-v23'; // depois vamos mudar versão
 
-const URLS_TO_CACHE = [
-  "./",
-  "./index.html",
-  "./manifest.json"
-];
-
-// 🔧 INSTALAÇÃO
-self.addEventListener("install", event => {
-  self.skipWaiting();
-
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(URLS_TO_CACHE);
-    })
-  );
+self.addEventListener('install', event => {
+  self.skipWaiting(); // instala e já prepara pra ativar
 });
 
-// 🔧 ATIVAÇÃO (remove caches antigos)
-self.addEventListener("activate", event => {
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
+    caches.keys().then(keys =>
+      Promise.all(
         keys.map(key => {
           if (key !== CACHE_NAME) {
             return caches.delete(key);
           }
         })
-      );
-    })
+      )
+    )
   );
 
-  self.clients.claim();
+  self.clients.claim(); // assume controle imediato
 });
 
-// ⚡ FETCH (network first + atualização forçada)
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    fetch(event.request, { cache: "no-store" }) // 🔥 força sempre versão nova
-      .then(response => {
-        const clone = response.clone();
-
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, clone);
-        });
-
-        return response;
-      })
-      .catch(() => caches.match(event.request)) // fallback offline
-  );
-});
-
-// 🔥 FORÇAR ATUALIZAÇÃO IMEDIATA
-self.addEventListener("message", event => {
-  if (event.data === "FORCE_UPDATE") {
+// permite ativação manual (botão atualizar)
+self.addEventListener('message', event => {
+  if (event.data === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
+
+// controle de cache
+self.addEventListener('fetch', event => {
+
+  // HTML sempre atualizado
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // outros
