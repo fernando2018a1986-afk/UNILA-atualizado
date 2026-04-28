@@ -1,4 +1,4 @@
-const CACHE_NAME = "unila-app-v1"; // MUDE ESSE NOME A CADA ATUALIZAÇÃO
+const CACHE_NAME = "unila-app-v5"; // MUDE ESSE NOME A CADA ATUALIZAÇÃO
 
 const urlsToCache = [
   "./",
