@@ -517,24 +517,25 @@ loadNotes();
 window.onload=loadNotes;
 </script>
 <script>
-async function atualizarApp() {
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js").then(reg => {
 
-  // 1️⃣ Apaga todos caches
-  const nomesCaches = await caches.keys();
-  await Promise.all(nomesCaches.map(nome => caches.delete(nome)));
+    // força atualizar quando nova versão existir
+    reg.onupdatefound = () => {
+      const newWorker = reg.installing;
+      newWorker.onstatechange = () => {
+        if (newWorker.state === "installed") {
+          if (navigator.serviceWorker.controller) {
+            // NOVA VERSÃO DISPONÍVEL → RECARREGA
+            window.location.reload();
+          }
+        }
+      };
+    };
 
-  // 2️⃣ Força o service worker a atualizar (se houver um novo)
-  if (navigator.serviceWorker && navigator.serviceWorker.getRegistration) {
-    const registro = await navigator.serviceWorker.getRegistration();
-    if (registro) {
-      await registro.update();
-    }
-  }
-
-  // 3️⃣ Recarrega o app
-  location.reload(true);
+  });
 }
 </script>
 
 </body>
-                                                                                                                  </html>
+                                                            </html>
