@@ -1,4 +1,4 @@
-const CACHE_NAME = "unila-app-v25"; // MUDE ISSO A CADA UPDATE
+const CACHE_NAME = "unila-app-v26"; // MUDE A CADA UPDATE
 
 const FILES = [
   "./",
@@ -6,7 +6,7 @@ const FILES = [
   "./manifest.json"
 ];
 
-// INSTALAÇÃO
+// 🔧 INSTALL
 self.addEventListener("install", event => {
   self.skipWaiting();
 
@@ -17,7 +17,7 @@ self.addEventListener("install", event => {
   );
 });
 
-// ATIVAÇÃO
+// 🔧 ACTIVATE (limpeza + controle imediato)
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -31,17 +31,21 @@ self.addEventListener("activate", event => {
     })
   );
 
-  self.clients.claim();
+  return self.clients.claim();
 });
 
-// FETCH (offline)
+// 🌐 FETCH (online com fallback offline)
 self.addEventListener("fetch", event => {
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+    fetch(event.request)
+      .then(response => {
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
 
-// 🔥 ESSENCIAL PARA O BOTÃO FUNCIONAR
+// 📩 FORÇA ATUALIZAÇÃO (botão manual)
 self.addEventListener("message", event => {
   if (event.data === "SKIP_WAITING") {
     self.skipWaiting();
