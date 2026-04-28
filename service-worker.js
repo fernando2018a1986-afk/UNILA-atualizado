@@ -1,11 +1,24 @@
-const CACHE_NAME = "unila-app-v16";
+const CACHE_NAME = "unila-app-v18"; // 🔥 troque versão sempre que atualizar
 
-self.addEventListener("install", e => {
+const URLS_TO_CACHE = [
+  "./",
+  "./index.html",
+  "./manifest.json"
+];
+
+// 🔧 INSTALAÇÃO
+self.addEventListener("install", event => {
   self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(URLS_TO_CACHE);
+    })
+  );
 });
 
-self.addEventListener("activate", e => {
-  e.waitUntil(
+// 🔧 ATIVAÇÃO (remove cache antigo)
+self.addEventListener("activate", event => {
+  event.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(
         keys.map(key => {
@@ -19,14 +32,22 @@ self.addEventListener("activate", e => {
   self.clients.claim();
 });
 
-// ⚡ SEM CACHE (sempre pega versão nova)
-self.addEventListener("fetch", e => {
-  e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+// ⚡ FETCH INTELIGENTE (network first)
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, clone);
+        });
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
 
-// 🔥 FORÇA ATUALIZAÇÃO
+// 🔥 FORÇAR UPDATE
 self.addEventListener("message", event => {
   if (event.data === "FORCE_UPDATE") {
     self.skipWaiting();
