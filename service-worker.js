@@ -1,4 +1,4 @@
-const CACHE_NAME = "unila-app-v14";
+const CACHE_NAME = "unila-app-v15";
 
 self.addEventListener("install", e => {
   self.skipWaiting();
