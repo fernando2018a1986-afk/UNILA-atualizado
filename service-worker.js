@@ -1,23 +1,11 @@
-const CACHE_NAME = "unila-app-v8"; // MUDE ESSE NOME A CADA ATUALIZAÇÃO
+const CACHE_NAME = "unila-app-v9";
 
-const urlsToCache = [
-  "./",
-  "./index.html",
-  "./manifest.json"
-];
-
-// INSTALAR (força instalar na hora)
-self.addEventListener("install", event => {
+self.addEventListener("install", e => {
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-  );
 });
 
-// ATIVAR (remove versões antigas)
-self.addEventListener("activate", event => {
-  event.waitUntil(
+self.addEventListener("activate", e => {
+  e.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(
         keys.map(key => {
@@ -31,17 +19,14 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
-// FETCH (usa cache primeiro)
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        return response || fetch(event.request);
-      })
+// ⚡ SEM CACHE (sempre pega versão nova)
+self.addEventListener("fetch", e => {
+  e.respondWith(
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });
 
-// RECEBER COMANDO DE ATUALIZAÇÃO
+// 🔥 FORÇA ATUALIZAÇÃO
 self.addEventListener("message", event => {
   if (event.data === "FORCE_UPDATE") {
     self.skipWaiting();
