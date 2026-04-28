@@ -1,4 +1,4 @@
-const CACHE_NAME = 'unila-v23'; // depois vamos mudar versão
+const CACHE_NAME = 'unila-v24'; // depois vamos mudar versão
 
 self.addEventListener('install', event => {
   self.skipWaiting(); // instala e já prepara pra ativar
