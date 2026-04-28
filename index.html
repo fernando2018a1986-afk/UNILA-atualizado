@@ -481,6 +481,37 @@ loadNotes();
 }
 
 function atualizarApp(){
+  const overlay = document.createElement("div");
+  overlay.style.position = "fixed";
+  overlay.style.top = "0";
+  overlay.style.left = "0";
+  overlay.style.width = "100%";
+  overlay.style.height = "100%";
+  overlay.style.background = "#0f172a";
+  overlay.style.display = "flex";
+  overlay.style.alignItems = "center";
+  overlay.style.justifyContent = "center";
+  overlay.style.flexDirection = "column";
+  overlay.style.zIndex = "9999";
+  overlay.style.color = "white";
+  overlay.style.fontSize = "20px";
+
+  overlay.innerHTML = `
+    <div style="font-size:40px; animation: girar 1s linear infinite;">🔄</div>
+    <div>Atualizando app...</div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const style = document.createElement("style");
+  style.innerHTML = `
+    @keyframes girar {
+      from {transform: rotate(0deg);}
+      to {transform: rotate(360deg);}
+    }
+  `;
+  document.head.appendChild(style);
+
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.getRegistration().then(reg => {
       if (reg) {
@@ -489,15 +520,16 @@ function atualizarApp(){
         if (reg.waiting) {
           reg.waiting.postMessage("FORCE_UPDATE");
         }
-
-        alert("🔄 Atualizando app...");
-        setTimeout(() => {
-          window.location.reload(true);
-        }, 1000);
-      } else {
-        alert("App não instalado ainda.");
       }
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     });
+  } else {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 }
 
@@ -516,4 +548,3 @@ if ("serviceWorker" in navigator) {
 
 
 Para Usar o E-mail institucional aqui no App adicione sua conta aqui e salve a senha no atalho.
-
