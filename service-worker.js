@@ -1,4 +1,4 @@
-const CACHE_NAME = "unila-app-v18"; // 🔥 troque versão sempre que atualizar
+const CACHE_NAME = "unila-app-v19"; // 🔥 troque versão sempre que atualizar
 
 const URLS_TO_CACHE = [
   "./",
