@@ -1,6 +1,6 @@
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open("unila-cache-v3").then((cache) => {
+    caches.open("unila-cache-v4").then((cache) => {
       return cache.addAll([
         "./",
         "./index.html",
