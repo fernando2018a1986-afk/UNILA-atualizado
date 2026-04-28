@@ -1,67 +1,20 @@
-const CACHE_NAME = "unila-v4"; // ⚠️ mude a versão sempre que atualizar
+const CACHE_NAME = "unila-v1";
 
-const urlsToCache = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png"
-];
-
-// INSTALAÇÃO
 self.addEventListener("install", event => {
-  self.skipWaiting(); // ativa imediatamente
-
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
-  );
+  self.skipWaiting();
 });
 
-// ATIVAÇÃO
 self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key); // remove cache antigo
-          }
-        })
-      );
-    })
-  );
-
-  self.clients.claim(); // controla todas as abas
+  event.waitUntil(self.clients.claim());
 });
 
-// FETCH (offline primeiro, depois internet)
 self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return (
-        response ||
-        fetch(event.request).then(networkResponse => {
-          // salva no cache dinamicamente
-          return caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-        }).catch(() => {
-          // fallback offline (opcional)
-          if (event.request.mode === "navigate") {
-            return caches.match("./index.html");
-          }
-        })
-      );
-    })
-  );
+  event.respondWith(fetch(event.request));
 });
 
-// ATUALIZAÇÃO FORÇADA PELO BOTÃO
+// permite forçar atualização
 self.addEventListener("message", event => {
-  if (event.data === "update") {
+  if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
 });
