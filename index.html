@@ -87,7 +87,6 @@ font-size:12px;
   background: #000;
   color: white;
 }
-
 /* NOTES */
 #notesPage textarea{
 width:100%;
@@ -148,16 +147,7 @@ border:none;
 <button class="estude" onclick="openPage('estudPage')">🎓 Estude na UNILA</button>
 <button class="google" onclick="openLink('https://enem.inep.gov.br/participante/#!/')">📝 ENEM – Página do Participante</button>
 <button class="noticias" onclick="openPage('noticiasPage')">📰 Notícias</button>
-<button onclick="atualizarApp()" style="
-  background:#000;
-  color:white;
-  padding:10px 18px;
-  border:none;
-  border-radius:8px;
-  font-size:16px;
-  width:100%;
-  margin-top:10px;
-">
+<button onclick="atualizarApp()" style="background:#000; color:#fff; border:none; padding:10px 15px; border-radius:8px;">
   🔄 Atualizar App
 </button>
 <button class="emergencia" onclick="openPage('upaPage')">🏥 Hospitais de Emergência 24h (UPA)</button>
@@ -189,7 +179,6 @@ Conselho Tutelar: (45) 3521-1112<br>
 Centro de Intoxicações: 0800 722 6001<br><br>
 
 ⚠ Em situações graves, ligue imediatamente.
-</p>
 </p>
 </div>
 
@@ -255,13 +244,12 @@ Pode ser gratuito para bolsistas.
 <p>
 ⚠ Horários e valores podem sofrer alterações.
 </p>
-
 </div>
-</p>
 
-<!-- INTERNET -->
 <div id="internetPage" class="page">
-<h2><p>
+<h2>🌐 Internet UNILA</h2>
+
+<p>
 Para configurar a internet da UNILA (redes <b>UNILA</b> ou <b>eduroam</b>), conecte-se à rede e utilize as configurações abaixo:
 </p>
 
@@ -275,30 +263,19 @@ Para configurar a internet da UNILA (redes <b>UNILA</b> ou <b>eduroam</b>), cone
 </p>
 
 <p>
-📱 Dispositivos Android:<br>
-• Selecione a rede UNILA ou eduroam<br>
-• Configure conforme os dados acima<br>
+📱 Android:<br>
+• Conecte na rede UNILA ou eduroam<br>
+• Use as configurações acima
 </p>
 
 <p>
-🍎 Dispositivos iOS (iPhone/iPad):<br>
-• Selecione a rede UNILA ou eduroam<br>
-• Insira usuário e senha institucional<br>
-• Aceite o certificado quando solicitado
+🍎 iPhone:<br>
+• Conecte na rede<br>
+• Insira login e aceite certificado
 </p>
 
 <p>
-💡 Dicas importantes:<br>
-• Identidade anônima: deixar em branco<br>
-• A rede eduroam funciona em várias universidades<br>
-• Visitantes podem usar credenciais da instituição de origem<br>
-• Alguns dispositivos Motorola podem exigir configurações adicionais (consulte o suporte)
-</p>
-
-<p>
-⚠ Problemas de acesso:<br>
-Acesse o Portal de Serviços da UNILA para suporte técnico.
-</p>
+⚠ Dispositivos Motorola precisa outras configurações. Problemas: procure suporte da UNILA
 </p>
 </div>
 
@@ -337,7 +314,6 @@ Administração Pública, Ciência Política e Sociologia, Ciências Econômicas
 Arquitetura e Urbanismo, Engenharia Civil de Infraestrutura, Engenharia de Energia, Engenharia de Materiais, Engenharia Química, Geografia
 </p>
 
-<p>
 📌 Formas de ingresso:<br>
 • SiSU (nota do ENEM)<br>
 • Processo Seletivo Internacional (PSI)<br>
@@ -346,14 +322,12 @@ Arquitetura e Urbanismo, Engenharia Civil de Infraestrutura, Engenharia de Energ
 • Vagas remanescentes
 </p>
 
-<p>
 🔄 Outras formas de entrada:<br>
 • Transferência externa<br>
 • Reingresso<br>
 • Portador de diploma
 </p>
 
-<p>
 ⚠ Informações importantes:<br>
 • Não possui vestibular próprio<br>
 • Ingresso geralmente anual<br>
@@ -361,19 +335,16 @@ Arquitetura e Urbanismo, Engenharia Civil de Infraestrutura, Engenharia de Energ
 • Cursos presenciais
 </p>
 
-<p>
 🌎 Diferenciais da UNILA:<br>
 • Ambiente internacional com estudantes de vários países<br>
 • Integração cultural latino-americana<br>
 • Ensino público de qualidade
 </p>
 
-<p>
 📊 Qualidade acadêmica:<br>
 A UNILA possui nota 4 (de 5) no Índice Geral de Cursos (IGC) do MEC.
 </p>
 
-<p>
 🏛 Benefícios oferecidos:<br>
 • Restaurante Universitário (baixo custo)<br>
 • Bolsas de auxílio estudantil<br>
@@ -382,17 +353,16 @@ A UNILA possui nota 4 (de 5) no Índice Geral de Cursos (IGC) do MEC.
 • Projetos de pesquisa e extensão
 </p>
 
-<p>
+<p> 
 💡 Dicas para novos estudantes:<br>
 • Utilize o SIGAA para sua vida acadêmica<br>
 • Acompanhe os editais regularmente<br>
 • Participe de projetos e atividades da universidade
 </p>
-</p>
 </div>
 <!-- NOTÍCIAS RECENTES -->
 <div id="noticiasPage" class="page">
-<h2>📰 Notícias</h>  04/2026
+<h2>📰 Notícias  04/2026</h2>
 <p>• 27/04 <br>
 Para salvar o Email institucional neste App faça login no navegador do Google e salve a senha memorizada.
 
@@ -476,10 +446,7 @@ document.querySelectorAll(".page").forEach(p=>p.style.display="none");
 function shareApp(){
   const texto = "📲 Baixe o App da UNILA:";
   const url = "https://drive.google.com/file/d/1XgYsFJlnd8VuQGAyYopxNI2Huuknsugo/view?usp=drivesdk";
-
   const mensagem = encodeURIComponent(texto + " " + url);
-
-  // Tenta abrir fora do WebView (Chrome/WhatsApp)
   window.open("https://api.whatsapp.com/send?text=" + mensagem, "_system");
 }
 
@@ -513,29 +480,31 @@ localStorage.setItem("notes",JSON.stringify(notes));
 loadNotes();
 }
 
+function atualizarApp(){
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistration().then(reg => {
+      if (reg) {
+        reg.update();
 
-window.onload=loadNotes;
-</script>
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./service-worker.js").then(reg => {
-
-    // força atualizar quando nova versão existir
-    reg.onupdatefound = () => {
-      const newWorker = reg.installing;
-      newWorker.onstatechange = () => {
-        if (newWorker.state === "installed") {
-          if (navigator.serviceWorker.controller) {
-            // NOVA VERSÃO DISPONÍVEL → RECARREGA
-            window.location.reload();
-          }
+        if (reg.waiting) {
+          reg.waiting.postMessage("update");
         }
-      };
-    };
 
-  });
+        alert("🔄 Atualizando app...");
+        window.location.reload();
+      } else {
+        alert("App ainda não instalado corretamente.");
+      }
+    });
+  }
 }
-</script>
+
+window.onload = loadNotes;
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js")
+    .then(() => console.log("Service Worker registrado"))
+    .catch(err => console.log("Erro SW:", err));
+}</script>
 
 </body>
                                                             </html>
