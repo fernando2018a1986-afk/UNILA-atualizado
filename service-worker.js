@@ -1,4 +1,4 @@
-const CACHE_NAME = "unila-app-v3"; // MUDE ISSO A CADA UPDATE
+const CACHE_NAME = "unila-app-v4"; // MUDE ISSO A CADA UPDATE
 
 const FILES = [
   "./",
