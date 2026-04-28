@@ -368,7 +368,7 @@ Para salvar o Email institucional neste App faça login no navegador do Google e
 
 <br><br>
 
-A Greve no transporte público de Foz continua nesta terça Feira dia 28.<br>
+Greve no transporte público de Foz.<br>
 
 <br>Estudantes não pagam transporte público em Foz.<br>
 
@@ -497,39 +497,36 @@ function atualizarApp(){
   overlay.style.fontSize = "20px";
 
   overlay.innerHTML = `
-    <div style="font-size:40px; animation: girar 1s linear infinite;">🔄</div>
+    <div style="font-size:40px;">🔄</div>
     <div>Atualizando app...</div>
   `;
 
   document.body.appendChild(overlay);
 
-  const style = document.createElement("style");
-  style.innerHTML = `
-    @keyframes girar {
-      from {transform: rotate(0deg);}
-      to {transform: rotate(360deg);}
-    }
-  `;
-  document.head.appendChild(style);
-
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.getRegistration().then(reg => {
-      if (reg) {
-        reg.update();
 
-        if (reg.waiting) {
-          reg.waiting.postMessage("FORCE_UPDATE");
-        }
+      if (!reg) {
+        location.reload();
+        return;
       }
 
-      setTimeout(() => {
+      // força buscar nova versão do SW
+      reg.update();
+
+      // se já tiver nova versão esperando
+      if (reg.waiting) {
+        reg.waiting.postMessage("FORCE_UPDATE");
+      }
+
+      // escuta quando o novo SW assume
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
         window.location.reload();
-      }, 1500);
+      });
+
     });
   } else {
-    setTimeout(() => {
-      window.location.reload();
-    }, 1500);
+    location.reload();
   }
 }
 
@@ -548,3 +545,4 @@ if ("serviceWorker" in navigator) {
 
 
 Para Usar o E-mail institucional aqui no App adicione sua conta aqui e salve a senha no atalho.
+20
