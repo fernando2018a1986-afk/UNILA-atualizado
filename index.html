@@ -13,6 +13,7 @@ body{
 font-family:Arial;
 margin:0;
 color:white;
+padding-bottom:50px;
 
 /* fundo degradê animado */
 background: linear-gradient(-45deg, #1a0033, #2b0a4a, #3b0f66, #120022);
@@ -81,7 +82,7 @@ line-height:1.7;
 
 .home-btn{
 position:fixed;
-bottom:90px;
+bottom:120px;
 right:15px;
 background:#22c55e;
 padding:14px;
@@ -91,7 +92,7 @@ z-index:999;
 
 .install-btn{
 position:fixed;
-bottom:20px;
+bottom:50px;
 left:50%;
 transform:translateX(-50%);
 background:#22c55e;
@@ -102,7 +103,7 @@ display:none;
 
 .update-btn{
 position:fixed;
-bottom:20px;
+bottom:80px;
 right:15px;
 background:#3b82f6;
 padding:8px 12px;
@@ -170,6 +171,19 @@ margin-top:20px;
 margin-bottom:10px;
 letter-spacing:2px;
 }
+}
+#dateBar{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(6px);
+padding:6px 14px;
+border-radius:12px 12px 0 0;
+font-size:13px;
+color:#e5e7eb;
+z-index:1; /* 👈 IMPORTANTE */
 }
 </style>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -588,9 +602,34 @@ function atualizarApp(){
     location.reload();
   }
 }
+function atualizarDataBar(){
+  const el = document.getElementById("dateBar");
 
-window.onload = loadNotes;
-let newWorker;
+  function formatarData(){
+    const d = new Date();
+
+    const dias = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+    const meses = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+
+    return `${dias[d.getDay()]}, ${d.getDate()} ${meses[d.getMonth()]} ${d.getFullYear()}`;
+  }
+
+  function atualizar(){
+    if(el){
+      el.textContent = formatarData();
+    }
+  }
+
+  atualizar();
+
+  // atualiza a cada 1 minuto
+  setInterval(atualizar, 60000);
+}
+
+window.onload = () => {
+  loadNotes();
+  atualizarDataBar();
+};
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./service-worker.js').then(reg => {
@@ -632,6 +671,8 @@ if (savedVersion !== APP_VERSION) {
 
 }</script>
 
+<div id="dateBar"></div>
+
 </body>
 
-</html>     30/04/2026
+</html>     
