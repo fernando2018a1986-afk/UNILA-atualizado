@@ -9,6 +9,25 @@
 <meta name="theme-color" content="#22c55e">
 
 <style>
+#chatBox{
+max-height:300px;
+overflow-y:auto;
+background:#0f172a;
+padding:10px;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.msg{
+background:#1e293b;
+padding:8px;
+border-radius:8px;
+margin-bottom:6px;
+}
+
+.msg strong{
+color:#22c55e;
+}
 body{
 font-family:Arial;
 margin:0;
@@ -189,6 +208,8 @@ z-index:1; /* 👈 IMPORTANTE */
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
@@ -200,6 +221,7 @@ z-index:1; /* 👈 IMPORTANTE */
 <button id="installBtn" class="install-btn">📲 Instalar App</button>
 
 <div id="home" class="menu">
+  <button class="dev" onclick="openPage('chatPage')">💬 Chat</button>
 
 <button class="unila" onclick="openLink('https://portal.unila.edu.br/')">🌐 Portal Oficial da UNILA</button>
 <button class="sigaa" onclick="openLink('https://sig.unila.edu.br/sigaa/verTelaLogin.do')">📚 Sistema Acadêmico SIGAA</button>
@@ -462,6 +484,21 @@ O significado do nome:
 
 Servidores das Universidades Federais em greve por tempo indeterminado, afetando bibliotecas, T.i. e outros setores, no entanto as aulas seguem normalmente.🌼🌼🌼</p>
 </div>
+<div id="chatPage" class="page">
+<h2>💬 Chat UNILA</h2>
+
+<div id="nickArea">
+<input id="nickInput" placeholder="Digite seu nick..." />
+<button onclick="saveNick()">Entrar</button>
+</div>
+
+<div id="chatArea" style="display:none;">
+<div id="chatBox"></div>
+
+<input id="chatInput" placeholder="Digite sua mensagem..." />
+<button onclick="sendMessage()">Enviar</button>
+</div>
+</div>
 
 <!-- DEV -->
 <div id="devPage" class="page">
@@ -503,6 +540,28 @@ Para outros tratamentos fora do contexto de urgência e emergência siga para  U
 </div>
 
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDCm8jh-gz3T8OkOH2J6ls66t5QizcKwu8",
+  authDomain: "app-unila.firebaseapp.com",
+  projectId: "app-unila",
+  storageBucket: "app-unila.firebasestorage.app",
+  messagingSenderId: "574505875323",
+  appId: "1:574505875323:web:fb885f0a2ae32b272fafde",
+  measurementId: "G-FJT3X93608"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+db.collection("teste").add({
+  mensagem: "Firebase funcionando!",
+  data: new Date()
+})
+.then(() => {
+  console.log("Salvo com sucesso!");
+})
+.catch((error) => {
+  console.error("Erro:", error);
+});
 function openLink(u){window.open(u,"_blank");}
 
 function openPage(id){
@@ -669,7 +728,65 @@ if (savedVersion !== APP_VERSION) {
   location.reload();
 }
 
-}</script>
+
+}
+let nick = localStorage.getItem("chat_nick") || "";
+
+function saveNick(){
+  const input = document.getElementById("nickInput").value;
+  if(!input) return;
+
+  nick = input;
+  localStorage.setItem("chat_nick", nick);
+
+  document.getElementById("nickArea").style.display="none";
+  document.getElementById("chatArea").style.display="block";
+
+  listenChat();
+}
+
+function sendMessage(){
+  const input = document.getElementById("chatInput");
+  if(!input.value) return;
+
+  db.collection("chat").add({
+    nick: nick,
+    text: input.value,
+    time: Date.now()
+  });
+
+  input.value="";
+}
+
+function listenChat(){
+  db.collection("chat")
+    .orderBy("time")
+    .onSnapshot(snapshot => {
+
+      const box = document.getElementById("chatBox");
+      box.innerHTML = "";
+
+      snapshot.forEach(doc => {
+        const m = doc.data();
+
+        const div = document.createElement("div");
+        div.className="msg";
+
+        div.innerHTML = `
+<strong>${m.nick}:</strong> ${m.text}
+<button onclick="deleteMsg('${doc.id}')">🗑</button>
+`;
+
+        box.appendChild(div);
+      });
+
+      box.scrollTop = box.scrollHeight;
+    });
+}
+function deleteMsg(id){
+  db.collection("chat").doc(id).delete();
+}
+</script>
 
 <div id="dateBar"></div>
 
