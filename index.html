@@ -752,13 +752,29 @@ async function saveNick(){
 
   if(!input) return;
 
-  const doc = await db.collection("users").doc(input).get();
+  const nickRef = db.collection("users").doc(input);
+  const doc = await nickRef.get();
 
+  // 🚫 Nick já existe
   if(doc.exists){
-    alert("❌ Nick já existe no banco");
-  } else {
-    alert("✅ Nick disponível");
+    alert("❌ Este nick já está em uso, escolha outro!");
+    return;
   }
+
+  // ✅ Salva no banco
+  await nickRef.set({
+    createdAt: Date.now()
+  });
+
+  // ✅ salva local
+  nick = input;
+  localStorage.setItem("chat_nick", nick);
+
+  // ✅ entra no chat
+  document.getElementById("nickArea").style.display="none";
+  document.getElementById("chatArea").style.display="block";
+
+  listenChat();
 }
 function sendMessage(){
   const input = document.getElementById("chatInput");
