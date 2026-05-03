@@ -696,14 +696,49 @@ window.onload = () => {
   loadNotes();
   atualizarDataBar();
 
-  // 👇 NOVO: entrar automático no chat
   if(nick){
     document.getElementById("nickArea").style.display="none";
     document.getElementById("chatArea").style.display="block";
     listenChat();
   }
-};
 
+  const box = document.getElementById("chatBox");
+
+  box.addEventListener("scroll", async () => {
+
+    if(box.scrollTop === 0 && !loadingMore && lastDoc){
+
+      loadingMore = true;
+
+      const oldHeight = box.scrollHeight;
+
+      const snapshot = await db.collection("chat")
+        .orderBy("time", "desc")
+        .startAfter(lastDoc)
+        .limit(LIMIT)
+        .get();
+
+      if(!snapshot.empty){
+
+        lastDoc = snapshot.docs[snapshot.docs.length - 1];
+
+        snapshot.docs.reverse().forEach(doc => {
+          const m = doc.data();
+
+          const div = document.createElement("div");
+          div.className = "msg";
+          div.innerHTML = `<strong>${m.nick}:</strong> ${m.text}`;
+
+          box.prepend(div);
+        });
+
+        box.scrollTop = box.scrollHeight - oldHeight;
+      }
+
+      loadingMore = false;
+    }
+  });
+};
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./service-worker.js').then(reg => {
 
@@ -736,6 +771,9 @@ if ('serviceWorker' in navigator) {
   }
 }
 let nick = localStorage.getItem("chat_nick") || "";
+const LIMIT = 10;
+let lastDoc = null;
+let loadingMore = false;
 
 async function saveNick(){
   const input = document.getElementById("nickInput").value.trim();
@@ -822,17 +860,20 @@ function sendMessage(){
 
 function listenChat(){
   db.collection("chat")
-  .orderBy("time", "asc")
-  .limit(50)
+  .orderBy("time", "desc")
+  .limit(LIMIT)
   .onSnapshot(snapshot => {
 
       const box = document.getElementById("chatBox");
       box.innerHTML = "";
 
-      const docs = [];
-snapshot.forEach(doc => docs.push(doc));
+      const docs = snapshot.docs;
+      if(docs.length > 0){
+  lastDoc = docs[docs.length - 1];
+}
+
 docs.reverse().forEach(doc => {
-        const m = doc.data();
+  const m = doc.data();
 
         const div = document.createElement("div");
         div.className="msg";
