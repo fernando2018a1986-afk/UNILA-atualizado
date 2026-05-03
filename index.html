@@ -493,10 +493,19 @@ Servidores das Universidades Federais em greve por tempo indeterminado, afetando
 </div>
 
 <div id="chatArea" style="display:none;">
+  <button id="changeNickBtn" onclick="changeNick()" style="display:none;">
+✏️ Mudar Nick
+</button>
 <div id="chatBox"></div>
 
 <input id="chatInput" placeholder="Digite sua mensagem..." />
 <button onclick="sendMessage()">Enviar</button>
+
+<button id="changeNickBtn" onclick="changeNick()" style="display:none;">
+🔄 Mudar Nick
+</button>
+
+</div>
 </div>
 </div>
 
@@ -757,14 +766,33 @@ async function saveNick(){
 
   // 🚫 Nick já existe
   if(doc.exists){
-    alert("❌ Este nick já está em uso, escolha outro!");
-    return;
+
+  const data = doc.data();
+  const agora = Date.now();
+
+  // 👇 SE FOR VOCÊ (ADMIN), pode usar mesmo ocupado
+  if(input === ADMIN_NICK){
+    console.log("Admin entrou com nick protegido");
+  } 
+  else {
+    // se ficou mais de 30 segundos sem atividade
+    if(agora - data.lastActive > 30000){
+
+      // libera o nick
+      await nickRef.delete();
+
+    } else {
+      alert("❌ Este nick já está em uso, escolha outro!");
+      return;
+    }
   }
+}
 
   // ✅ Salva no banco
   await nickRef.set({
-    createdAt: Date.now()
-  });
+  createdAt: Date.now(),
+  lastActive: Date.now()
+});
 
   // ✅ salva local
   nick = input;
@@ -775,6 +803,10 @@ async function saveNick(){
   document.getElementById("chatArea").style.display="block";
 
   listenChat();
+  // 👇 mostrar botão só para admin
+if(nick === "Fernando"){
+  document.getElementById("changeNickBtn").style.display = "block";
+}
 }
 function sendMessage(){
   const input = document.getElementById("chatInput");
@@ -831,6 +863,18 @@ function deleteMsg(id, msgNick){
 
   db.collection("chat").doc(id).delete();
 }
+setInterval(() => {
+  if(nick){
+  document.getElementById("nickArea").style.display="none";
+  document.getElementById("chatArea").style.display="block";
+  listenChat();
+
+  // 👇 aqui também
+  if(nick === "Fernando"){
+    document.getElementById("changeNickBtn").style.display = "block";
+  }
+}
+}, 10000); // a cada 10 segundos
 </script>
 
 <div id="dateBar"></div>
