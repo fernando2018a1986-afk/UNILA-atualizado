@@ -553,6 +553,7 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const ADMIN_NICK = "Fernando"; // coloque seu nick EXATO aqui
 db.enablePersistence()
   .then(() => {
     console.log("Offline ativado!");
@@ -787,9 +788,16 @@ function listenChat(){
         const div = document.createElement("div");
         div.className="msg";
 
-        div.innerHTML = `
+        let btn = "";
+
+// 👇 só mostra botão se for dono OU admin
+if(m.nick === nick || nick === ADMIN_NICK){
+  btn = `<button onclick="deleteMsg('${doc.id}', '${m.nick}')">🗑</button>`;
+}
+
+div.innerHTML = `
 <strong>${m.nick}:</strong> ${m.text}
-<button onclick="deleteMsg('${doc.id}')">🗑</button>
+${btn}
 `;
 
         box.appendChild(div);
@@ -798,7 +806,14 @@ function listenChat(){
       box.scrollTop = box.scrollHeight;
     });
 }
-function deleteMsg(id){
+function deleteMsg(id, msgNick){
+
+  // 👇 bloqueio de segurança
+  if(msgNick !== nick && nick !== ADMIN_NICK){
+    alert("Você não pode apagar esta mensagem!");
+    return;
+  }
+
   db.collection("chat").doc(id).delete();
 }
 </script>
