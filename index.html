@@ -205,6 +205,27 @@ font-size:13px;
 color:#e5e7eb;
 z-index:1; /* 👈 IMPORTANTE */
 }
+.msg{
+  background:#1e293b;
+  padding:10px 12px;
+  border-radius:12px;
+  margin-bottom:8px;
+  max-width:85%;
+}
+
+.msg strong{
+  color:#22c55e;
+  display:block;
+  margin-bottom:2px;
+}
+
+.msg small{
+  display:block;
+  text-align:right;
+  font-size:11px;
+  color:#94a3b8;
+  margin-top:4px;
+}
 </style>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -679,7 +700,7 @@ function atualizarDataBar(){
 
     return `${dias[d.getDay()]}, ${d.getDate()} ${meses[d.getMonth()]} ${d.getFullYear()}`;
   }
-
+  
   function atualizar(){
     if(el){
       el.textContent = formatarData();
@@ -691,6 +712,32 @@ function atualizarDataBar(){
   // atualiza a cada 1 minuto
   setInterval(atualizar, 60000);
 }
+function formatarDataMensagem(timestamp){
+  const data = new Date(timestamp);
+  const agora = new Date();
+
+  const ontem = new Date();
+  ontem.setDate(agora.getDate() - 1);
+
+  const mesmoDia = data.toDateString() === agora.toDateString();
+  const ehOntem = data.toDateString() === ontem.toDateString();
+
+  const hora = data.toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  if(mesmoDia){
+    return `Hoje às ${hora}`;
+  }
+
+  if(ehOntem){
+    return `Ontem às ${hora}`;
+  }
+
+  return data.toLocaleDateString('pt-BR') + ` às ${hora}`;
+}
+
 
 window.onload = () => {
   loadNotes();
@@ -725,9 +772,13 @@ window.onload = () => {
         snapshot.docs.reverse().forEach(doc => {
           const m = doc.data();
 
+          
           const div = document.createElement("div");
           div.className = "msg";
-          div.innerHTML = `<strong>${m.nick}:</strong> ${m.text}`;
+          div.innerHTML = `
+<strong>${m.nick}:</strong> ${m.text}
+<br><small>${formatarDataMensagem(m.time)}</small>
+`;
 
           box.prepend(div);
         });
@@ -887,6 +938,7 @@ if(m.nick === nick || nick === ADMIN_NICK){
 
 div.innerHTML = `
 <strong>${m.nick}:</strong> ${m.text}
+<br><small>${formatarDataMensagem(m.time)}</small>
 ${btn}
 `;
 
