@@ -822,7 +822,7 @@ function sendMessage(){
 
 function listenChat(){
   db.collection("chat")
-  .orderBy("time", "desc")
+  .orderBy("time", "asc")
   .limit(50)
   .onSnapshot(snapshot => {
 
