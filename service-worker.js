@@ -1,55 +1,44 @@
-const CACHE_NAME = "unila-app-v52"; // 🔥 MUDE SEMPRE AO ATUALIZAR
+// Nome do cache (mude versão quando atualizar)
+const CACHE_NAME = "unila-app-v55";
 
-const FILES = [
+// Arquivos essenciais
+const urlsToCache = [
   "./",
   "./index.html",
   "./manifest.json"
 ];
 
-// 🚀 INSTALL - instala nova versão imediatamente
-self.addEventListener("install", (event) => {
+// INSTALAÇÃO
+self.addEventListener("install", event => {
   self.skipWaiting();
-
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(FILES);
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(urlsToCache);
     })
   );
 });
 
-// ⚡ ACTIVATE - remove versões antigas e assume controle
-self.addEventListener("activate", (event) => {
+// ATIVAÇÃO (limpa caches antigos)
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then((keys) => {
+    caches.keys().then(keys => {
       return Promise.all(
-        keys.map((key) => {
+        keys.map(key => {
           if (key !== CACHE_NAME) {
-            return caches.delete(key); // limpa cache antigo
+            return caches.delete(key);
           }
         })
       );
     })
   );
-
-  return self.clients.claim(); // assume controle imediato
+  self.clients.claim();
 });
 
-// 🌐 FETCH - tenta online primeiro, fallback offline
-self.addEventListener("fetch", (event) => {
+// FETCH (cache inteligente)
+self.addEventListener("fetch", event => {
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        return response; // sempre pega versão online
-      })
-      .catch(() => {
-        return caches.match(event.request); // fallback offline
-      })
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
-});
-
-// 📩 FORÇA ATUALIZAÇÃO (botão do app)
-self.addEventListener("message", (event) => {
-  if (event.data === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
 });
