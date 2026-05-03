@@ -540,6 +540,7 @@ Para outros tratamentos fora do contexto de urgência e emergência siga para  U
 </div>
 
 <script>
+
 const firebaseConfig = {
   apiKey: "AIzaSyDCm8jh-gz3T8OkOH2J6ls66t5QizcKwu8",
   authDomain: "app-unila.firebaseapp.com",
@@ -552,6 +553,13 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+db.enablePersistence()
+  .then(() => {
+    console.log("Offline ativado!");
+  })
+  .catch((err) => {
+    console.log("Erro ao ativar offline:", err);
+  });
 db.collection("teste").add({
   mensagem: "Firebase funcionando!",
   data: new Date()
@@ -688,6 +696,13 @@ function atualizarDataBar(){
 window.onload = () => {
   loadNotes();
   atualizarDataBar();
+
+  // 👇 NOVO: entrar automático no chat
+  if(nick){
+    document.getElementById("nickArea").style.display="none";
+    document.getElementById("chatArea").style.display="block";
+    listenChat();
+  }
 };
 
 if ('serviceWorker' in navigator) {
