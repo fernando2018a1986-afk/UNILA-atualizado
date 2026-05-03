@@ -1062,6 +1062,14 @@ function atualizarAtividade(){
   }
 }
 setInterval(atualizarAtividade, 60000); // a cada 60 segundos
+const colors = ["#1a0033", "#2b0a4a", "#3b0f66", "#120022"];
+let i = 0;
+
+setInterval(() => {
+  i = (i + 1) % colors.length;
+  document.querySelector("meta[name=theme-color]")
+    .setAttribute("content", colors[i]);
+}, 3000);
 </script>
 
 <div id="dateBar"></div>
