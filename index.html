@@ -747,19 +747,19 @@ if (savedVersion !== APP_VERSION) {
 }
 let nick = localStorage.getItem("chat_nick") || "";
 
-function saveNick(){
-  const input = document.getElementById("nickInput").value;
+async function saveNick(){
+  const input = document.getElementById("nickInput").value.trim();
+
   if(!input) return;
 
-  nick = input;
-  localStorage.setItem("chat_nick", nick);
+  const doc = await db.collection("users").doc(input).get();
 
-  document.getElementById("nickArea").style.display="none";
-  document.getElementById("chatArea").style.display="block";
-
-  listenChat();
+  if(doc.exists){
+    alert("❌ Nick já existe no banco");
+  } else {
+    alert("✅ Nick disponível");
+  }
 }
-
 function sendMessage(){
   const input = document.getElementById("chatInput");
   if(!input.value) return;
