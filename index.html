@@ -6,7 +6,7 @@
 <title>Unila App</title>
 
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#22c55e">
+<meta name="theme-color" content="#2b0a4a">
 
 <style>
 #sendBtn{
@@ -718,7 +718,7 @@ let notes=JSON.parse(localStorage.getItem("notes")||"[]");
 notes.forEach((n,i)=>{
 let div=document.createElement("div");
 div.className="note-item";
-div.innerHHTML=`${n} <button class="delete-btn" onclick="deleteNote(${i})">🗑</button>`;
+div.innerHTML=`${n} <button class="delete-btn" onclick="deleteNote(${i})">🗑</button>`;
 list.appendChild(div);
 });
 }
