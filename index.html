@@ -318,12 +318,35 @@ align-items:center;
 
   z-index:999;
 }
+#radioBtn{
+  position:fixed;
+  bottom:200px;
+  right:15px;
+
+  width:55px;
+  height:55px;
+  border-radius:50%;
+
+  background:#9333ea;
+  color:white;
+  font-size:22px;
+
+  border:none;
+  z-index:999;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
 </style>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 </head>
 
 <body>
@@ -334,7 +357,8 @@ align-items:center;
   </p>
 </div>
 
-<button class="home-btn" onclick="goHome()">🏠</button>
+<button class="home-btn" onclick="goHome()">🏠</button
+><button id="radioBtn" onclick="toggleRadioSimples()">🎧</button>
 <button id="installBtn" class="install-btn">📲 Instalar App</button>
 
 <div id="home" class="menu">
@@ -1081,7 +1105,22 @@ function atualizarAtividade(){
     });
   }
 }
-setInterval(atualizarAtividade, 60000); // a cada 60 segundos
+setInterval(atualizarAtividade, 60000);
+// a cada 60 segundos
+let player;
+let tocando = false;
+
+
+
+function toggleRadioSimples(){
+  const player = document.getElementById("radioPlayer");
+
+  if(player.style.display === "none" || player.style.display === ""){
+    player.style.display = "block";
+  } else {
+    player.style.display = "none";
+  }
+}
 const colors = ["#1a0033", "#2b0a4a", "#3b0f66", "#120022"];
 let i = 0;
 
@@ -1091,7 +1130,16 @@ setInterval(() => {
     .setAttribute("content", colors[i]);
 }, 3000);
 </script>
-
+<div id="radioPlayer" style="display:none; margin-bottom:80px;">
+  <iframe 
+    width="100%" 
+    height="200"
+    src="https://www.youtube.com/embed/videoseries?list=PLyTsVCtgNA7Uzq69sB_NhyJJEpNr1ePPM"
+    frameborder="0"
+    allow="autoplay"
+    allowfullscreen>
+  </iframe>
+</div>
 <div id="dateBar"></div>
 
 </body>
