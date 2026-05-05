@@ -17,13 +17,24 @@
 }
 
 .titulo-unila{
-  font-size:65px;
+  font-size:52px;
   font-weight:1000;
   letter-spacing:5px;
 
   color:#5b21b6;
 
-  text-shadow: none;
+  text-transform: uppercase;
+
+  /* 🎯 efeito 3D (camadas de profundidade) */
+  text-shadow:
+    0 1px 0 #2e1065,
+    0 2px 0 #2e1065,
+    0 3px 0 #2e1065,
+    0 4px 0 #1e093f,
+    0 5px 0 #1e093f,
+
+    /* sombra mais distante */
+    0 8px 10px rgba(0,0,0,0.35);
 }
 .subtitulo-unila{
   margin:0;
