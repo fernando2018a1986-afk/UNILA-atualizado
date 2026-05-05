@@ -9,6 +9,39 @@
 <meta name="theme-color" content="#2b0a4a">
 
 <style>
+.topo{
+  width:100%;
+  text-align:center;
+  margin-top:20px;
+  margin-bottom:10px;
+}
+
+.titulo-unila{
+  font-size:65px;
+  font-weight:1000;
+  letter-spacing:5px;
+
+  color:#5b21b6;
+
+  text-shadow: none;
+}
+.subtitulo-unila{
+  margin:0;
+  font-size:20px;
+  color:#ffffff;
+  letter-spacing:1.5px;
+  opacity:0.85;
+}
+
+/* ✨ animação suave de brilho */
+@keyframes glow{
+  0%,100%{
+    filter: drop-shadow(0 0 6px rgba(34,197,94,0.3));
+  }
+  50%{
+    filter: drop-shadow(0 0 12px rgba(56,189,248,0.4));
+  }
+}
 #sendBtn{
   width:45px;
   height:45px;
@@ -320,7 +353,7 @@ align-items:center;
 }
 #radioBtn{
   position:fixed;
-  bottom:200px;
+  bottom:5px;
   right:15px;
 
   width:55px;
@@ -347,18 +380,28 @@ align-items:center;
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
+<script>
+let ytPlayer;
+
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player("ytRadio", {
+    events: {
+      'onReady': () => {}
+    }
+  });
+}
+</script>
 </head>
 
 <body>
   <div class="topo">
-  <h1>UNILA</h1>
-  <p style="margin:0; font-size:20px; color:#c4b5fd; letter-spacing:1px;">
+  <h1 class="titulo-unila">Unila</h1>
+  <p class="subtitulo-unila">
     Universidade Federal da Integração Latino-Americana
   </p>
 </div>
-
 <button class="home-btn" onclick="goHome()">🏠</button
-><button id="radioBtn" onclick="toggleRadioSimples()">🎧</button>
+><button id="radioBtn" onclick="toggleRadioSimples(); scrollToRadio()">🎧</button>
 <button id="installBtn" class="install-btn">📲 Instalar App</button>
 
 <div id="home" class="menu">
@@ -1112,14 +1155,40 @@ let tocando = false;
 
 
 
-function toggleRadioSimples(){
+function toggleRadioSimples() {
   const player = document.getElementById("radioPlayer");
+  const iframe = document.getElementById("ytRadio");
 
-  if(player.style.display === "none" || player.style.display === ""){
+  if (player.style.display === "none" || player.style.display === "") {
     player.style.display = "block";
+
+    // 🔊 tocar automaticamente
+    iframe.contentWindow.postMessage(
+      JSON.stringify({
+        event: "command",
+        func: "playVideo",
+        args: []
+      }),
+      "*"
+    );
+
   } else {
     player.style.display = "none";
+
+    // ⏸ pausar
+    iframe.contentWindow.postMessage(
+      JSON.stringify({
+        event: "command",
+        func: "pauseVideo",
+        args: []
+      }),
+      "*"
+    );
   }
+
+  setTimeout(() => {
+    player.scrollIntoView({ behavior: "smooth" });
+  }, 300);
 }
 const colors = ["#1a0033", "#2b0a4a", "#3b0f66", "#120022"];
 let i = 0;
@@ -1132,16 +1201,39 @@ setInterval(() => {
 </script>
 <div id="radioPlayer" style="display:none; margin-bottom:80px;">
   <iframe 
-    width="100%" 
-    height="200"
-    src="https://www.youtube.com/embed/videoseries?list=PLyTsVCtgNA7Uzq69sB_NhyJJEpNr1ePPM"
-    frameborder="0"
-    allow="autoplay"
-    allowfullscreen>
-  </iframe>
+  id="ytRadio"
+  width="100%" 
+  height="200"
+  src="https://www.youtube.com/embed/videoseries?list=PLyTsVCtgNA7Uzq69sB_NhyJJEpNr1ePPM&enablejsapi=1"
+  frameborder="0"
+  allow="autoplay"
+  allowfullscreen>
+</iframe>
 </div>
 <div id="dateBar"></div>
 
-</body>
+<script>
+<script>
+function mostrarRadio() {
+  const radio = document.getElementById("radioPlayer");
 
-</html>     
+  // mostrar o player
+  radio.style.display = "block";
+
+  // rolar até o player suavemente
+  setTimeout(() => {
+    radio.scrollIntoView({ behavior: "smooth" });
+  }, 200);
+}
+<script>
+function scrollToRadio() {
+  const radio = document.getElementById("radioPlayer");
+
+  setTimeout(() => {
+    radio.scrollIntoView({ behavior: "smooth" });
+  }, 300);
+}
+</script>
+
+</body>
+</html>
